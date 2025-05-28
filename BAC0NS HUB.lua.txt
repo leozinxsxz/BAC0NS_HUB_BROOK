@@ -1,0 +1,173 @@
+-- BAC0NS HUB - Atualizado (Tema Marrom)
+
+local ScreenGui = Instance.new("ScreenGui")
+local Main = Instance.new("Frame")
+local TopBar = Instance.new("Frame")
+local Title = Instance.new("TextLabel")
+local CloseButton = Instance.new("TextButton")
+local MinimizeButton = Instance.new("TextButton")
+local SideBar = Instance.new("Frame")
+local ScriptsButton = Instance.new("TextButton")
+local PlayerButton = Instance.new("TextButton")
+local MainArea = Instance.new("Frame")
+local FlyButton = Instance.new("TextButton")
+local NoClipButton = Instance.new("TextButton")
+
+-- GUI
+ScreenGui.Parent = game.CoreGui
+ScreenGui.Name = "BACONS_HUB"
+
+Main.Name = "Main"
+Main.Parent = ScreenGui
+Main.BackgroundColor3 = Color3.fromRGB(60, 40, 20)
+Main.Position = UDim2.new(0.3, 0, 0.2, 0)
+Main.Size = UDim2.new(0, 500, 0, 300)
+
+-- TopBar
+TopBar.Parent = Main
+TopBar.BackgroundColor3 = Color3.fromRGB(85, 60, 30)
+TopBar.Size = UDim2.new(1, 0, 0, 40)
+
+Title.Parent = TopBar
+Title.Text = "☕ BACONS HUB"
+Title.Font = Enum.Font.GothamBold
+Title.TextColor3 = Color3.new(1,1,1)
+Title.TextSize = 22
+Title.Position = UDim2.new(0, 10, 0, 0)
+Title.Size = UDim2.new(0, 400, 0, 40)
+Title.BackgroundTransparency = 1
+Title.TextXAlignment = Enum.TextXAlignment.Left
+
+-- Botão fechar
+CloseButton.Parent = TopBar
+CloseButton.BackgroundColor3 = Color3.fromRGB(255, 60, 60)
+CloseButton.Position = UDim2.new(1, -45, 0.2, 0)
+CloseButton.Size = UDim2.new(0, 30, 0, 25)
+CloseButton.Font = Enum.Font.GothamBold
+CloseButton.Text = "X"
+CloseButton.TextColor3 = Color3.new(1,1,1)
+CloseButton.TextSize = 16
+CloseButton.MouseButton1Click:Connect(function()
+    ScreenGui:Destroy()
+end)
+
+-- Botão Minimizar
+MinimizeButton.Parent = TopBar
+MinimizeButton.BackgroundColor3 = Color3.fromRGB(90, 90, 90)
+MinimizeButton.Position = UDim2.new(1, -85, 0.2, 0)
+MinimizeButton.Size = UDim2.new(0, 30, 0, 25)
+MinimizeButton.Font = Enum.Font.GothamBold
+MinimizeButton.Text = "-"
+MinimizeButton.TextColor3 = Color3.new(1,1,1)
+MinimizeButton.TextSize = 18
+
+local minimized = false
+MinimizeButton.MouseButton1Click:Connect(function()
+    minimized = not minimized
+    MainArea.Visible = not minimized
+    SideBar.Visible = not minimized
+end)
+
+-- Sidebar
+SideBar.Parent = Main
+SideBar.BackgroundColor3 = Color3.fromRGB(50, 35, 15)
+SideBar.Position = UDim2.new(0, 0, 0, 40)
+SideBar.Size = UDim2.new(0, 120, 1, -40)
+
+ScriptsButton.Parent = SideBar
+ScriptsButton.BackgroundColor3 = Color3.fromRGB(80, 55, 25)
+ScriptsButton.Position = UDim2.new(0.1, 0, 0.05, 0)
+ScriptsButton.Size = UDim2.new(0, 100, 0, 40)
+ScriptsButton.Font = Enum.Font.GothamBold
+ScriptsButton.Text = "Scripts"
+ScriptsButton.TextColor3 = Color3.new(1,1,1)
+ScriptsButton.TextSize = 16
+
+PlayerButton.Parent = SideBar
+PlayerButton.BackgroundColor3 = Color3.fromRGB(80, 55, 25)
+PlayerButton.Position = UDim2.new(0.1, 0, 0.25, 0)
+PlayerButton.Size = UDim2.new(0, 100, 0, 40)
+PlayerButton.Font = Enum.Font.GothamBold
+PlayerButton.Text = "Player"
+PlayerButton.TextColor3 = Color3.new(1,1,1)
+PlayerButton.TextSize = 16
+
+-- MainArea
+MainArea.Parent = Main
+MainArea.BackgroundColor3 = Color3.fromRGB(70, 50, 25)
+MainArea.Position = UDim2.new(0, 120, 0, 40)
+MainArea.Size = UDim2.new(1, -120, 1, -40)
+
+-- Botões dentro do MainArea
+FlyButton.Parent = MainArea
+FlyButton.BackgroundColor3 = Color3.fromRGB(90, 65, 35)
+FlyButton.Position = UDim2.new(0.05, 0, 0.05, 0)
+FlyButton.Size = UDim2.new(0, 200, 0, 50)
+FlyButton.Font = Enum.Font.GothamBold
+FlyButton.Text = "🚀 Ativar Fly"
+FlyButton.TextColor3 = Color3.new(1,1,1)
+FlyButton.TextSize = 18
+FlyButton.MouseButton1Click:Connect(function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/XNEOFF/FlyGuiV3/main/FlyGuiV3.txt"))()
+end)
+
+NoClipButton.Parent = MainArea
+NoClipButton.BackgroundColor3 = Color3.fromRGB(90, 65, 35)
+NoClipButton.Position = UDim2.new(0.05, 0, 0.3, 0)
+NoClipButton.Size = UDim2.new(0, 200, 0, 50)
+NoClipButton.Font = Enum.Font.GothamBold
+NoClipButton.Text = "🌀 Ativar NoClip"
+NoClipButton.TextColor3 = Color3.new(1,1,1)
+NoClipButton.TextSize = 18
+
+local noclip = false
+NoClipButton.MouseButton1Click:Connect(function()
+    noclip = not noclip
+    NoClipButton.Text = noclip and "🌀 NoClip ON" or "🌀 NoClip OFF"
+end)
+
+game:GetService("RunService").Stepped:Connect(function()
+    if noclip and game.Players.LocalPlayer.Character then
+        for _, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+            if v:IsA("BasePart") and v.CanCollide == true then
+                v.CanCollide = false
+            end
+        end
+    end
+end)
+
+-- Sistema Drag
+local UIS = game:GetService("UserInputService")
+local frame = Main
+local dragToggle = nil
+local dragSpeed = 0.15
+local dragStart = nil
+local startPos = nil
+
+local function updateInput(input)
+	local delta = input.Position - dragStart
+	local position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X,
+		startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+	frame:TweenPosition(position, "Out", "Sine", dragSpeed, true)
+end
+
+TopBar.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 then
+		dragToggle = true
+		dragStart = input.Position
+		startPos = frame.Position
+		input.Changed:Connect(function()
+			if input.UserInputState == Enum.UserInputState.End then
+				dragToggle = false
+			end
+		end)
+	end
+end)
+
+UIS.InputChanged:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseMovement then
+		if dragToggle then
+			updateInput(input)
+		end
+	end
+end)
